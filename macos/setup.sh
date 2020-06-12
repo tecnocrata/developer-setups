@@ -7,7 +7,7 @@
 # INSTALLING GIT & NODE
 # =================
 #ssh-keygen -t rsa -b 4096 -C "enrique@ortuno.net"
-cat ~/.ssh/id_rsa.pub
+# cat ~/.ssh/id_rsa.pub
 brew install git
 git config --global core.editor "nano"
 
@@ -130,10 +130,6 @@ brew install ack
 # =================
 brew install the_silver_searcher
 
-# Configure iTerm2
-# Url: https://medium.com/@Clovis_app/configuration-of-a-beautiful-efficient-terminal-and-prompt-on-osx-in-7-minutes-827c29391961
-# Url: https://medium.com/@caulfieldOwen/youre-missing-out-on-a-better-mac-terminal-experience-d73647abf6d7
-
 # =================
 # INSTALLING Tools
 # =================
@@ -162,7 +158,6 @@ brew cask install firefox
 brew cask install iterm2
 brew cask install xquartz
 brew cask install the-unarchiver
-# brew cask install font-fira-code
 brew cask install clockify
 
 # =================
