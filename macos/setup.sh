@@ -139,11 +139,14 @@ brew install speedtest-cli
 #More info about imagemagick: https://www.youtube.com/watch?v=Ym2pxzWpTNw&t=5s
 brew install imagemagick
 brew install yarn
-
 brew install mc
 brew install cmus
 brew install peco
 brew install tig
+# =================
+# INSTALLING Markdown convertion tool
+# =================
+brew install pandoc
 
 # =================
 # INSTALLING Browsers
@@ -153,7 +156,7 @@ brew cask install microsoft-edge
 brew cask install firefox
 
 # =================
-# INSTALLING Tools
+# INSTALLING Various Tools
 # =================
 brew cask install iterm2
 brew cask install xquartz
@@ -161,13 +164,19 @@ brew cask install the-unarchiver
 brew cask install clockify
 
 # =================
-# INSTALLING Development Tools
+# INSTALLING Development tools
 # =================
 clear
 brew cask install docker
 brew cask install visual-studio-code
 brew cask install visual-studio
+brew cask install dotnet-sdk
 brew cask install sourcetree
+
+# =================
+# INSTALLING Alfred related tools
+# =================
+npm install --global alfred-fkill
 
 # =================
 # Enabling END and HOME key correctly
