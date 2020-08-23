@@ -172,6 +172,7 @@ brew cask install visual-studio-code
 brew cask install visual-studio
 brew cask install dotnet-sdk
 brew cask install sourcetree
+brew install kubectl
 
 # =================
 # INSTALLING Alfred related tools
