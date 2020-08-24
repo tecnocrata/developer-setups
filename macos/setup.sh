@@ -172,7 +172,17 @@ brew cask install visual-studio-code
 brew cask install visual-studio
 brew cask install dotnet-sdk
 brew cask install sourcetree
+
+# =================
+# INSTALLING Minikube
+# AFTER installing this script let's go and start kubernetes/k8s
+# https://gist.github.com/tecnocrata/24183dd0d97078bf1f109dc6e7d3e295
+# =================
 brew install kubectl
+curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-hyperkit \
+&& sudo install -o root -g wheel -m 4755 docker-machine-driver-hyperkit /usr/local/bin/
+brew install minikube
+
 
 # =================
 # INSTALLING Alfred related tools
