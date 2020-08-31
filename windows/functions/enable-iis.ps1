@@ -29,10 +29,6 @@ Function EnableIISFeatures {
     # Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpRedirect
     Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationDevelopment
 
-    Enable-WindowsOptionalFeature -online -FeatureName NetFx4Extended-ASPNET45
-    Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility
-    Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45
-
     Enable-WindowsOptionalFeature -Online -FeatureName IIS-HealthAndDiagnostics
     Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpLogging
     Enable-WindowsOptionalFeature -Online -FeatureName IIS-LoggingLibraries
@@ -57,7 +53,12 @@ Function EnableIISFeatures {
 
     Enable-WindowsOptionalFeature -Online -FeatureName NetFx3
 
-    Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
+    Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET -all
+    Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45 -all
+
+    Enable-WindowsOptionalFeature -online -FeatureName NetFx4Extended-ASPNET45
+    Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility
+    Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45
 
     Enable-WindowsOptionalFeature -Online -FeatureName WAS-WindowsActivationService
     Enable-WindowsOptionalFeature -Online -FeatureName WAS-ProcessModel
