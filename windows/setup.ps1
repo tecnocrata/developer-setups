@@ -2946,7 +2946,7 @@ CreateAppPools
 
 CreateFirewallRules
 
-choco install sql-server-2016-developer-edition
+choco install sql-server-2016-developer-edition --execution-timeout 5400 -ia "/IACCEPTSQLSERVERLICENSETERMS /QS /HIDECONSOLE /ACTION=install /FEATURES=SQLEngine,Tools /INSTANCE ID=MSSQLSERVER /INSTANCENAME=MSSQLSERVER /UPDATEENABLED=FALSE /AGTSVCACCOUNT='UCN\_rdbuild' /AGTSVCPASSWORD=RDBu1ld01 /AGTSVCSTARTUPTYPE=Automatic /SQLSVCACCOUNT='UCN\_rdbuild' /SQLSVCPASSWORD=RDBu1ld01 /SQLSVCSTARTUPTYPE=Automatic" -o -y
 choco install sql-server-management-studio
 choco install visualstudio2015professional
 choco install visualstudio2017professional
