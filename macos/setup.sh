@@ -144,6 +144,11 @@ brew install cmus
 brew install peco
 brew install tig
 # =================
+# INSTALLING Neo Vim
+# =================
+brew install neovim
+
+# =================
 # INSTALLING Markdown convertion tool
 # =================
 brew install pandoc
