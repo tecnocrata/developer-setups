@@ -143,10 +143,6 @@ brew install mc
 brew install cmus
 brew install peco
 brew install tig
-# =================
-# INSTALLING Neo Vim
-# =================
-brew install neovim
 
 # =================
 # INSTALLING Markdown convertion tool
@@ -220,4 +216,32 @@ echo '"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:";' >> DefaultKe
 echo '/* Shift + Ctrl + End Button*/' >> DefaultKeyBinding.dict
 echo '"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; ' >> DefaultKeyBinding.dict
 echo '}' >> DefaultKeyBinding.dict
+cd ~/
+
+# =================
+# INSTALLING and CONFIGURING Neo Vim
+# =================
+brew install neovim
+cd .config
+echo '' > .vimrc
+echo 'set number' >> .vimrc
+echo 'set mouse=a' >> .vimrc
+echo 'set numberwidth=1' >> .vimrc
+echo 'set clipboard=unnamed' >> .vimrc
+echo 'syntax enable' >> .vimrc
+echo 'set showcmd' >> .vimrc
+echo 'set ruler' >> .vimrc
+echo 'set encoding=utf-8' >> .vimrc
+echo 'set showmatch' >> .vimrc
+echo 'set sw=2' >> .vimrc
+echo 'set relativenumber' >> .vimrc
+echo 'set laststatus=2' >> .vimrc
+ln -s ~/.config/.vimrc ~/.vimrc
+
+mkdir nvim
+cd nvim
+echo '' > init.vim
+echo 'set runtimepath^=~/.vim runtimepath+=~/.vim/after' >> init.vim
+echo 'let &packpath=&runtimepath' >> init.vim
+echo 'source ~/.vimrc' >> init.vim
 cd ~/
