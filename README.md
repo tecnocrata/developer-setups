@@ -8,7 +8,7 @@ I have to admit that I never thought a day when I would create a setup for all t
 
 For some time I’ve been developing some scripts for personal use, these scripts are useful for setting up a new development environment from scratch
 
-There are two flavors of them, one for macOS and another one for Ubuntu.
+There are three flavors of them, one for macOS, another one for Ubuntu and my last addition for Windows.
 
 ## Powershell scripts
 
