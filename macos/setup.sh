@@ -1,3 +1,7 @@
+cd ~/
+mkdir installation
+cd ~/installation
+
 # =================
 # INSTALLING BREW
 # =================
@@ -52,6 +56,7 @@ python3 -m pybin
 # INSTALLING AWSCLI thru Bundle
 # =================
 clear
+cd ~/installation
 echo
 echo "Installing AWS CLI"
 echo "---------------------"
@@ -62,6 +67,7 @@ sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 # =================
 # INSTALLING ZSH Completions (ZSH already comes with macOS)
 # =================
+cd ~/installation
 brew install zsh-completions
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Configure ZSH
@@ -73,6 +79,7 @@ chsh -s =zsh
 # INSTALLING ZSH autosuggestions
 # =================
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
+cd ~/installation
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # =================
@@ -80,17 +87,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Url: https://github.com/zimfw/zimfw
 # Why: https://github.com/zimfw/zimfw/wiki/Speed
 # =================
-# git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
-
-# setopt EXTENDED_GLOB
-# for template_file in ${ZDOTDIR:-${HOME}}/.zim/templates/*; do
-#   user_file="${ZDOTDIR:-${HOME}}/.${template_file:t}"
-#   touch ${user_file}
-#   ( print -rn "$(<${template_file})$(<${user_file})" >! ${user_file} ) 2>/dev/null
-# done
-
-# source ${ZDOTDIR:-${HOME}}/.zlogin
+cd ~/installation
 curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+# zsh ~/.zim/zimfw.zsh install
+
 
 # ==========================
 # INSTALLING powerlevel9k for Zim
@@ -99,12 +99,20 @@ curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | 
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.zim/modules/prompt/external-themes/powerlevel9k
 # ln -s ~/.zim/modules/prompt/external-themes/powerlevel9k/powerlevel9k.zsh-theme ~/.zim/modules/prompt/functions/prompt_powerlevel9k_setup
 
+cd ~/Library/Fonts 
+curl -O 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf'
+curl -O 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf'
+curl -O 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf'
+curl -O 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf'
+cd ~/installation
+
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # ==========================
 # INSTALLING Powerline fonts
 # ==========================
 # clone
+cd ~/
 git clone https://github.com/powerline/fonts.git --depth=1
 # install
 cd fonts
@@ -182,6 +190,7 @@ brew cask install sourcetree
 # AFTER installing this script let's go and start kubernetes/k8s
 # https://gist.github.com/tecnocrata/24183dd0d97078bf1f109dc6e7d3e295
 # =================
+cd ~/installation
 brew install kubectl
 curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-hyperkit \
 && sudo install -o root -g wheel -m 4755 docker-machine-driver-hyperkit /usr/local/bin/
