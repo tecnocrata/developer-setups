@@ -171,7 +171,8 @@ brew cask install firefox
 # =================
 # INSTALLING Various Tools
 # =================
-brew cask install iterm2
+# brew cask install iterm2
+brew install --cask iterm2
 brew cask install xquartz
 brew cask install the-unarchiver
 brew cask install clockify
