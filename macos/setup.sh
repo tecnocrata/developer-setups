@@ -14,11 +14,6 @@ git config --global core.editor "nano"
 brew install node
 npm install -g n
 
-# =================
-# INSTALLING Angular - CLI
-# =================
-npm install -g @angular/cli
-
 # ==============
 # INSTALLING GIT
 # ==============
@@ -65,10 +60,10 @@ unzip awscli-bundle.zip
 sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 # =================
-# INSTALLING ZSH
+# INSTALLING ZSH Completions (ZSH already comes with macOS)
 # =================
-brew install zsh zsh-completions
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+brew install zsh-completions
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Configure ZSH
 # https://medium.com/@mrkdsgn/install-zsh-and-oh-my-zsh-on-osx-10-11-el-capitan-cfaa0ebb97dc
 
@@ -101,8 +96,10 @@ curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | 
 # INSTALLING powerlevel9k for Zim
 # After Install configure using instructions at: https://github.com/bhilburn/powerlevel9k/wiki/Install-Instructions#option-9-install-for-zim
 # ==========================
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.zim/modules/prompt/external-themes/powerlevel9k
-ln -s ~/.zim/modules/prompt/external-themes/powerlevel9k/powerlevel9k.zsh-theme ~/.zim/modules/prompt/functions/prompt_powerlevel9k_setup
+# git clone https://github.com/bhilburn/powerlevel9k.git ~/.zim/modules/prompt/external-themes/powerlevel9k
+# ln -s ~/.zim/modules/prompt/external-themes/powerlevel9k/powerlevel9k.zsh-theme ~/.zim/modules/prompt/functions/prompt_powerlevel9k_setup
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # ==========================
 # INSTALLING Powerline fonts
