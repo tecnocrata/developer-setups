@@ -1,5 +1,9 @@
 # Post Installation Instructions
 
+## Powerlevel10k
+
+Set ZSH_THEME="powerlevel10k/powerlevel10k" in ~/.zshrc.
+
 ## Configure Github Tokens
 
 Generate your keys and copy the pub key
