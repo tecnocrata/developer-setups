@@ -164,28 +164,27 @@ brew install pandoc
 # =================
 # INSTALLING Browsers
 # =================
-brew cask install google-chrome
-brew cask install microsoft-edge
-brew cask install firefox
+brew install --cask google-chrome
+brew install --cask microsoft-edge
+brew install --cask firefox
 
 # =================
 # INSTALLING Various Tools
 # =================
-# brew cask install iterm2
 brew install --cask iterm2
-brew cask install xquartz
-brew cask install the-unarchiver
-brew cask install clockify
+brew install --cask xquartz
+brew install --cask the-unarchiver
+brew install --cask clockify
 
 # =================
 # INSTALLING Development tools
 # =================
 clear
-brew cask install docker
-brew cask install visual-studio-code
-brew cask install visual-studio
-brew cask install dotnet-sdk
-brew cask install sourcetree
+brew install --cask docker
+brew install --cask visual-studio-code
+brew install --cask visual-studio
+brew install --cask dotnet-sdk
+brew install --cask sourcetree
 
 # =================
 # INSTALLING Minikube
