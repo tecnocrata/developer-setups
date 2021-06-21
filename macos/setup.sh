@@ -176,6 +176,7 @@ brew install --cask xquartz
 brew install --cask the-unarchiver
 brew install --cask clockify
 brew install --cask notion
+brew install --cask appcleaner
 
 # =================
 # INSTALLING Development tools
@@ -186,6 +187,7 @@ brew install --cask visual-studio-code
 brew install --cask visual-studio
 brew install --cask dotnet-sdk
 brew install --cask sourcetree
+brew install --cask postman
 
 # =================
 # INSTALLING Minikube
