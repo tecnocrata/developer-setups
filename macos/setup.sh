@@ -175,6 +175,7 @@ brew install --cask iterm2
 brew install --cask xquartz
 brew install --cask the-unarchiver
 brew install --cask clockify
+brew install --cask notion
 
 # =================
 # INSTALLING Development tools
