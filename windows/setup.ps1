@@ -211,7 +211,7 @@ $ChocoInstalls = @(
     'curl',
     'Cygwin',
     'f.lux'
-    'dotnet4.7.1',
+    'dotnet4.6.1',
     'driverbooster',
     'dropbox',
     'everything',
@@ -242,7 +242,7 @@ $ChocoInstalls = @(
     'rvtools',
     'sharex',
     'slack',
-    'sql-server-management-studio',
+    # 'sql-server-management-studio',
     'superputty',
     'terminals',
     'totalcommander',
@@ -255,8 +255,8 @@ $ChocoInstalls = @(
     'windirstat',
     'winscp',
     # 'wireshark',
-    'yumi',
-    'visualstudiocode'
+    'yumi'
+    # 'visualstudiocode'
 )
 
 # Visual Studio Code extensions to install (both code-insiders and code if available)
@@ -2855,6 +2855,119 @@ Function CreateFirewallRules {
 
 }
 
+Function FinalSqlSeverInstallation {
+    # https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/enable-or-disable-a-server-network-protocol?view=sql-server-ver15
+    Import-Module sqlps
+    $smo = 'Microsoft.SqlServer.Management.Smo.'  
+    $wmi = new-object ($smo + 'Wmi.ManagedComputer').  
+
+    # List the object properties, including the instance names.  
+    $Wmi  
+
+    # Enable the TCP protocol on the default instance.  
+    $uri = "ManagedComputer[@Name='${env:COMPUTERNAME}']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Tcp']"  
+    $Tcp = $wmi.GetSmoObject($uri)  
+    $Tcp.IsEnabled = $true  
+    $Tcp.Alter()  
+    $Tcp  
+
+    # Enable the named pipes protocol for the default instance.  
+    $uri = "ManagedComputer[@Name='${env:COMPUTERNAME}']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Np']"  
+    $Np = $wmi.GetSmoObject($uri)  
+    $Np.IsEnabled = $true  
+    $Np.Alter()  
+    $Np  
+
+    $Machine = new-object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' 'localhost' #$server_name
+
+    $instance = $Machine.ServerInstances[ 'MSSQLSERVER' ];
+
+    $instance.ServerProtocols[ 'Tcp' ].IsEnabled = $true;
+    $instance.ServerProtocols[ 'Tcp' ].Alter();
+
+    $ipAll = $instance.ServerProtocols['Tcp'].IPAddresses['IPAll'];
+    $ipAll.IPAddressProperties['TcpPort'].Value = "1433, 1434";
+    $ipAll.IPAddressProperties['TcpDynamicPorts'].Value = ""
+    $instance.ServerProtocols['Tcp'].Alter();
+
+    Restart-Service MSSQLSERVER
+}
+
+Function AddSqlUsers {
+    Remove-Module sqlps
+    Import-Module sqlserver
+
+    $Pass = ConvertTo-SecureString "Blf01!2" -AsPlainText -Force
+    $Credential = New-Object System.Management.Automation.PSCredential("svc",$pass)
+    Add-SqlLogin -ServerInstance "${env:COMPUTERNAME}" -LoginType SqlLogin -DefaultDatabase tempdb -Enable -GrantConnectSql -LoginPSCredential $Credential -EnforcePasswordExpiration False -EnforcePasswordPolicy False
+
+    Add-UserToRole "${env:COMPUTERNAME}" "master" "svc" "sysadmin"
+
+    $Pass = ConvertTo-SecureString "Password1" -AsPlainText -Force
+    $Credential = New-Object System.Management.Automation.PSCredential("AutomationTestUser",$pass)
+    Add-SqlLogin -ServerInstance "${env:COMPUTERNAME}" -LoginType SqlLogin -DefaultDatabase tempdb -Enable -GrantConnectSql -LoginPSCredential $Credential -EnforcePasswordExpiration False -EnforcePasswordPolicy False
+
+    Add-UserToRole "${env:COMPUTERNAME}" "master" "AutomationTestUser" "sysadmin"
+}
+
+Function Add-UserToRole ([string] $server, [String] $Database , [string]$User, [string]$Role)
+{
+    $Svr = New-Object ('Microsoft.SqlServer.Management.Smo.Server') $server
+    #Check Database Name entered correctly
+    $db = $svr.Databases[$Database]
+    if($db -eq $null)
+        {
+        Write-Output " $Database is not a valid database on $Server"
+        Write-Output " Databases on $Server are :"
+        $svr.Databases|select name
+        break
+        }
+    #Check Role exists on Database
+        $Rol = $db.Roles[$Role]
+    if($Rol -eq $null)
+        {
+        Write-Output " $Role is not a valid Role on $Database on $Server  "
+        Write-Output " Roles on $Database are:"
+        $db.roles|select name
+        break
+        }
+    if(!($svr.Logins.Contains($User)))
+        {
+        Write-Output "$User not a login on $server create it first"
+        break
+        }
+    if (!($db.Users.Contains($User)))
+        {
+            # Add user to database
+
+            $usr = New-Object ('Microsoft.SqlServer.Management.Smo.User') ($db, $User)
+            $usr.Login = $User
+            $usr.Create()
+
+            #Add User to the Role
+            $Rol = $db.Roles[$Role]
+            $Rol.AddMember($User)
+            Write-Output "$User was not a login on $Database on $server"
+            Write-Output "$User added to $Database on $Server and $Role Role"
+        }
+        else
+        {
+            #Add User to the Role
+            $Rol = $db.Roles[$Role]
+            $Rol.AddMember($User)
+            Write-Output "$User added to $Role Role in $Database on $Server "
+        }
+}
+
+Function FinishConfigureSQLServer {
+    $SQLServer = "${env:COMPUTERNAME}"
+    $db3 = "master"
+    Invoke-Sqlcmd -ServerInstance $SQLServer -Database $db3 -Query "sp_configure 'show advanced options', 1;"
+    Invoke-Sqlcmd -ServerInstance $SQLServer -Database $db3 -Query "RECONFIGURE;"
+    Invoke-Sqlcmd -ServerInstance $SQLServer -Database $db3 -Query "sp_configure 'clr enabled', 1;"
+    Invoke-Sqlcmd -ServerInstance $SQLServer -Database $db3 -Query "RECONFIGURE;"
+}
+
 $tweaks = @()
 
 try {
@@ -2921,6 +3034,8 @@ else {
 ##################################
 ##################################
 
+Write-Host -ForegroundColor 'Yellow' 'Starting NiceIncontact setup process...'
+
 dism /online /Enable-Feature /FeatureName:"NetFx3"
 
 # DisableFirewall
@@ -2948,8 +3063,15 @@ CreateFirewallRules
 
 choco install sql-server-2016-developer-edition --execution-timeout 5400 -ia "/IACCEPTSQLSERVERLICENSETERMS /QS /HIDECONSOLE /ACTION=install /FEATURES=SQLEngine,Tools /INSTANCE ID=MSSQLSERVER /INSTANCENAME=MSSQLSERVER /UPDATEENABLED=FALSE /AGTSVCACCOUNT='UCN\_rdbuild' /AGTSVCPASSWORD=RDBu1ld01 /AGTSVCSTARTUPTYPE=Automatic /SQLSVCACCOUNT='UCN\_rdbuild' /SQLSVCPASSWORD=RDBu1ld01 /SQLSVCSTARTUPTYPE=Automatic" -o -y
 choco install sql-server-management-studio
+
 choco install visualstudio2015professional
-choco install visualstudio2017professional
+choco install visualstudio2019professional
+
+FinalSqlSeverInstallation
+
+AddSqlUsers
+
+FinishConfigureSQLServer
 
 <#
     Install any chocolatey packages we want setup now
