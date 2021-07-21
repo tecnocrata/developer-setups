@@ -2292,7 +2292,7 @@ Function InstallMsftBloat {
 }
 # In case you have removed them for good, you can try to restore the files using installation medium as follows
 # New-Item C:\Mnt -Type Directory | Out-Null
-# dism /Mount-Image /ImageFile:D:\sources\install.wim /index:1 /ReadOnly /MountDir:C:\Mnt
+# dism /Mount-Image /ImageFile:C:\sources\install.wim /index:1 /ReadOnly /MountDir:C:\Mnt
 # robocopy /S /SEC /R:0 "C:\Mnt\Program Files\WindowsApps" "C:\Program Files\WindowsApps"
 # dism /Unmount-Image /Discard /MountDir:C:\Mnt
 # Remove-Item -Path C:\Mnt -Recurse
@@ -2968,6 +2968,101 @@ Function FinishConfigureSQLServer {
     Invoke-Sqlcmd -ServerInstance $SQLServer -Database $db3 -Query "RECONFIGURE;"
 }
 
+Function InstallSqlServer {
+    Write-Host -ForegroundColor 'Red' 'Installing SQL Server...'
+    $SqlInstance = 'MSSQLSERVER'
+    $QuietSimple = $true
+    $x86 = $false
+    $InstanceName = '' # SqlExpress
+    $Pass = 'P@$$w0rd'
+    $chocopath = 'c:\programdata\chocolatey'
+
+    $Source = @"
+;SQL Server 2012 Configuration File
+; SQL-2012-Base.ini
+;
+[OPTIONS]
+; Specify the Instance ID for the SQL Server features you have specified. SQL Server directory structure, registry structure, and service names will incorporate the instance ID of the SQL Server instance.
+INSTANCEID=”$SqlInstance”
+; Specifies a Setup work flow, like INSTALL, UNINSTALL, or UPGRADE. This is a required parameter.
+ACTION=”Install”
+; Specifies features to install, uninstall, or upgrade. The list of top-level features include SQL, AS, RS, IS, MDS, and Tools. The SQL feature will install the Database Engine, Replication, Full-Text, and Data Quality Services (DQS) server. The Tools feature will install Management Tools, Books online components, SQL Server Data Tools, and other shared components.
+FEATURES=SQLENGINE,REPLICATION,FULLTEXT,SSMS
+; Displays the command line parameters usage
+HELP=”False”
+; Specifies that the detailed Setup log should be piped to the console.
+INDICATEPROGRESS=”False”
+; Setup will not display any user interface.
+QUIET=”True”
+; Setup will display progress only without any user interaction.
+QUIETSIMPLE=”$QuietSimple”
+; Specifies that Setup should install into WOW64. This command line argument is not supported on an IA64 or a 32-bit system.
+X86=”$x86”
+; Specifies the path to the installation media folder where setup.exe is located.
+MEDIASOURCE=”c:\programdata\chocolatey\lib\mssqlserver2012express”
+; Detailed help for command line argument ENU has not been defined yet.
+ENU=”False”
+; Parameter that controls the user interface behavior. Valid values are Normal for the full UI,AutoAdvance for a simplied UI, and EnableUIOnServerCore for bypassing Server Core setup GUI block.
+; UIMODE=”AutoAdvance”
+; Specify if errors can be reported to Microsoft to improve future SQL Server releases. Specify 1 or True to enable and 0 or False to disable this feature.
+ERRORREPORTING=”True”
+; Specify the root installation directory for shared components.  This directory remains unchanged after shared components are already installed.
+INSTALLSHAREDDIR=”D:\Program Files\Microsoft SQL Server”
+; Specify the root installation directory for the WOW64 shared components.  This directory remains unchanged after WOW64 shared components are already installed.
+INSTALLSHAREDWOWDIR=”D:\Program Files (x86)\Microsoft SQL Server”
+; Specify the installation directory.
+INSTANCEDIR=”D:\Program Files\Microsoft SQL Server”
+; Specify that SQL Server feature usage data can be collected and sent to Microsoft. Specify 1 or True to enable and 0 or False to disable this feature.
+SQMREPORTING=”True”
+; Specify a default or named instance. MSSQLSERVER is the default instance for non-Express editions and SQLExpress for Express editions. This parameter is required when installing the SQL Server Database Engine (SQL), Analysis Services (AS), or Reporting Services (RS).
+INSTANCENAME=”$InstanceName”
+; Agent account name
+AGTSVCACCOUNT=”NT AUTHORITYNETWORK SERVICE”
+; Auto-start service after installation.
+AGTSVCSTARTUPTYPE=”Automatic”
+; Startup type for the SQL Server service.
+SQLSVCSTARTUPTYPE=”Automatic”
+; Level to enable FILESTREAM feature at (0, 1, 2 or 3).
+FILESTREAMLEVEL=”0″
+; Set to “1” to enable RANU for SQL Server Express.
+ENABLERANU=”False”
+; Specifies a Windows collation or an SQL collation to use for the Database Engine.
+SQLCOLLATION=”SQL_Latin1_General_CP1_CI_AS”
+; Account for SQL Server service: DomainUser or system account.
+SQLSVCACCOUNT=”NT AUTHORITYNETWORK SERVICE”
+; Provision current user as a Database Engine system administrator for SQL Server 2012 Express.
+ADDCURRENTUSERASSQLADMIN=”False”
+; Specify 0 to disable or 1 to enable the TCP/IP protocol.
+TCPENABLED=”1″
+; Specify 0 to disable or 1 to enable the Named Pipes protocol.
+NPENABLED=”0″
+; Startup type for Browser Service.
+BROWSERSVCSTARTUPTYPE=”Enabled”
+; Accept SQL Server license terms
+IACCEPTSQLSERVERLICENSETERMS=”TRUE”
+; Specify whether SQL Server Setup should discover and include product updates. The valid values are True and False or 1 and 0. By default SQL Server Setup will include updates that are found.
+UpdateEnabled=”True”
+; Specify the location where SQL Server Setup will obtain product updates. The valid values are “MU” to search Microsoft Update, a valid folder path, a relative path such as .MyUpdates or a UNC share. By default SQL Server Setup will search Microsoft Update or a Windows Update service through the Window Server Update Services.
+UpdateSource=”MU”
+; CM brick TCP communication port
+COMMFABRICPORT=”0″
+; How matrix will use private networks
+COMMFABRICNETWORKLEVEL=”0″
+; How inter brick communication will be protected
+COMMFABRICENCRYPTION=”0″
+; TCP port used by the CM brick
+MATRIXCMBRICKCOMMPORT=”0″
+SECURITYMODE="SQL"
+SAPWD="$Pass"
+"@
+
+    set-content -Value $Source -Path 'configurationfile.ini'
+    # choco.exe install mssqlserver2012express --params='/ConfigurationFile="ConfigurationFile.ini"' -y
+    choco install sql-server-2016-developer-edition --execution-timeout 5400 --params='/ConfigurationFile="ConfigurationFile.ini"' -y
+
+    Remove-Item configurationfile.ini -Force    
+}
+
 $tweaks = @()
 
 try {
@@ -3061,16 +3156,23 @@ CreateAppPools
 
 CreateFirewallRules
 
-choco install sql-server-2016-developer-edition --execution-timeout 5400 -ia "/IACCEPTSQLSERVERLICENSETERMS /QS /HIDECONSOLE /ACTION=install /FEATURES=SQLEngine,Tools /INSTANCE ID=MSSQLSERVER /INSTANCENAME=MSSQLSERVER /UPDATEENABLED=FALSE /AGTSVCACCOUNT='UCN\_rdbuild' /AGTSVCPASSWORD=RDBu1ld01 /AGTSVCSTARTUPTYPE=Automatic /SQLSVCACCOUNT='UCN\_rdbuild' /SQLSVCPASSWORD=RDBu1ld01 /SQLSVCSTARTUPTYPE=Automatic" -o -y
+# choco install sql-server-2016-developer-edition --execution-timeout 5400 -ia "/IACCEPTSQLSERVERLICENSETERMS /QS /HIDECONSOLE /ACTION=install /FEATURES=SQLEngine,Tools /INSTANCE ID=MSSQLSERVER /INSTANCENAME=MSSQLSERVER /UPDATEENABLED=FALSE /AGTSVCACCOUNT='UCN\_rdbuild' /AGTSVCPASSWORD=RDBu1ld01 /AGTSVCSTARTUPTYPE=Automatic /SQLSVCACCOUNT='UCN\_rdbuild' /SQLSVCPASSWORD=RDBu1ld01 /SQLSVCSTARTUPTYPE=Automatic" -o -y
+InstallSqlServer
+
+choco feature enable -n allowGlobalConfirmation
+
+Write-Host -ForegroundColor 'Red' 'Installing SQL Server Management Studio...'
 choco install sql-server-management-studio
 
+Write-Host -ForegroundColor 'Red' 'Installing VS2015...'
 choco install visualstudio2015professional
+Write-Host -ForegroundColor 'Red' 'Installing VS2019...'
 choco install visualstudio2019professional
-
+Write-Host -ForegroundColor 'Red' 'Completing SQL Server Installation...'
 FinalSqlSeverInstallation
-
+Write-Host -ForegroundColor 'Red' 'Adding SQL Server Users...'
 AddSqlUsers
-
+Write-Host -ForegroundColor 'Red' 'Completing SQL Server Configuration...'
 FinishConfigureSQLServer
 
 <#
