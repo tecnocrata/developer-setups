@@ -2834,8 +2834,8 @@ Function CreateAppPools {
 
 Function CreateFirewallRules {
     Write-Host "Creating Firewall rules..."
-    New-NetFirewallRule -Name "Allow All Inbound" -Direction Inbound -InterfaceType Any -Action Allow
-    New-NetFirewallRule -Name "Allow All Outbound" -Direction Outbound -InterfaceType Any -Action Allow
+    New-NetFirewallRule -Name "Allow All Inbound" -DisplayName "Allow All Inbound" -Direction Inbound -InterfaceType Any -Action Allow
+    New-NetFirewallRule -Name "Allow All Outbound" -DisplayName "Allow All Outbound" -Direction Outbound -InterfaceType Any -Action Allow
 
     netsh advfirewall firewall add rule name="Co-op Service" dir=in action=allow protocol=TCP localport=9303,8897
     netsh advfirewall firewall add rule name="File Server" dir=in action=allow protocol=TCP localport=9301,8899
