@@ -2969,96 +2969,95 @@ Function FinishConfigureSQLServer {
 }
 
 Function InstallSqlServer {
-    Write-Host -ForegroundColor 'Red' 'Installing SQL Server...'
+    Write-Host -ForegroundColor 'Green' 'Installing SQL Server...'
     $SqlInstance = 'MSSQLSERVER'
     $QuietSimple = $true
     $x86 = $false
-    $InstanceName = '' # SqlExpress
+    $InstanceName = 'MSSQLSERVER' # SqlExpress
     $Pass = 'P@$$w0rd'
-    $chocopath = 'c:\programdata\chocolatey'
-
+    $user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+    $user
     $Source = @"
-;SQL Server 2012 Configuration File
-; SQL-2012-Base.ini
+;SQL Server 2016 Configuration File
+; SQL-2016-Base.ini
 ;
 [OPTIONS]
 ; Specify the Instance ID for the SQL Server features you have specified. SQL Server directory structure, registry structure, and service names will incorporate the instance ID of the SQL Server instance.
-INSTANCEID=”$SqlInstance”
+INSTANCEID="$SqlInstance"
 ; Specifies a Setup work flow, like INSTALL, UNINSTALL, or UPGRADE. This is a required parameter.
-ACTION=”Install”
+ACTION="Install"
 ; Specifies features to install, uninstall, or upgrade. The list of top-level features include SQL, AS, RS, IS, MDS, and Tools. The SQL feature will install the Database Engine, Replication, Full-Text, and Data Quality Services (DQS) server. The Tools feature will install Management Tools, Books online components, SQL Server Data Tools, and other shared components.
-FEATURES=SQLENGINE,REPLICATION,FULLTEXT,SSMS
+FEATURES=SQLENGINE,IS,Tools
 ; Displays the command line parameters usage
-HELP=”False”
+HELP="False"
 ; Specifies that the detailed Setup log should be piped to the console.
-INDICATEPROGRESS=”False”
+INDICATEPROGRESS="False"
 ; Setup will not display any user interface.
-QUIET=”True”
+QUIET="True"
 ; Setup will display progress only without any user interaction.
-QUIETSIMPLE=”$QuietSimple”
+; QUIETSIMPLE="$QuietSimple"
 ; Specifies that Setup should install into WOW64. This command line argument is not supported on an IA64 or a 32-bit system.
-X86=”$x86”
-; Specifies the path to the installation media folder where setup.exe is located.
-MEDIASOURCE=”c:\programdata\chocolatey\lib\mssqlserver2012express”
+X86="$x86"
 ; Detailed help for command line argument ENU has not been defined yet.
-ENU=”False”
+ENU="False"
 ; Parameter that controls the user interface behavior. Valid values are Normal for the full UI,AutoAdvance for a simplied UI, and EnableUIOnServerCore for bypassing Server Core setup GUI block.
-; UIMODE=”AutoAdvance”
+; UIMODE="AutoAdvance"
 ; Specify if errors can be reported to Microsoft to improve future SQL Server releases. Specify 1 or True to enable and 0 or False to disable this feature.
-ERRORREPORTING=”True”
+ERRORREPORTING="True"
 ; Specify the root installation directory for shared components.  This directory remains unchanged after shared components are already installed.
-INSTALLSHAREDDIR=”D:\Program Files\Microsoft SQL Server”
+INSTALLSHAREDDIR="C:\Program Files\Microsoft SQL Server"
 ; Specify the root installation directory for the WOW64 shared components.  This directory remains unchanged after WOW64 shared components are already installed.
-INSTALLSHAREDWOWDIR=”D:\Program Files (x86)\Microsoft SQL Server”
+INSTALLSHAREDWOWDIR="C:\Program Files (x86)\Microsoft SQL Server"
 ; Specify the installation directory.
-INSTANCEDIR=”D:\Program Files\Microsoft SQL Server”
+INSTANCEDIR="C:\Program Files\Microsoft SQL Server"
 ; Specify that SQL Server feature usage data can be collected and sent to Microsoft. Specify 1 or True to enable and 0 or False to disable this feature.
-SQMREPORTING=”True”
+SQMREPORTING="True"
 ; Specify a default or named instance. MSSQLSERVER is the default instance for non-Express editions and SQLExpress for Express editions. This parameter is required when installing the SQL Server Database Engine (SQL), Analysis Services (AS), or Reporting Services (RS).
-INSTANCENAME=”$InstanceName”
-; Agent account name
-AGTSVCACCOUNT=”NT AUTHORITYNETWORK SERVICE”
+INSTANCENAME="MSSQLSERVER"
 ; Auto-start service after installation.
-AGTSVCSTARTUPTYPE=”Automatic”
+AGTSVCSTARTUPTYPE="Automatic"
 ; Startup type for the SQL Server service.
-SQLSVCSTARTUPTYPE=”Automatic”
+SQLSVCSTARTUPTYPE="Automatic"
 ; Level to enable FILESTREAM feature at (0, 1, 2 or 3).
-FILESTREAMLEVEL=”0″
-; Set to “1” to enable RANU for SQL Server Express.
-ENABLERANU=”False”
+FILESTREAMLEVEL="0"
+; Set to "1" to enable RANU for SQL Server Express.
+ENABLERANU="False"
 ; Specifies a Windows collation or an SQL collation to use for the Database Engine.
-SQLCOLLATION=”SQL_Latin1_General_CP1_CI_AS”
-; Account for SQL Server service: DomainUser or system account.
-SQLSVCACCOUNT=”NT AUTHORITYNETWORK SERVICE”
+SQLCOLLATION="SQL_Latin1_General_CP1_CI_AS"
 ; Provision current user as a Database Engine system administrator for SQL Server 2012 Express.
-ADDCURRENTUSERASSQLADMIN=”False”
+ADDCURRENTUSERASSQLADMIN="False"
 ; Specify 0 to disable or 1 to enable the TCP/IP protocol.
-TCPENABLED=”1″
+TCPENABLED="1"
 ; Specify 0 to disable or 1 to enable the Named Pipes protocol.
-NPENABLED=”0″
+NPENABLED="0"
 ; Startup type for Browser Service.
-BROWSERSVCSTARTUPTYPE=”Enabled”
+BROWSERSVCSTARTUPTYPE="Automatic"
 ; Accept SQL Server license terms
-IACCEPTSQLSERVERLICENSETERMS=”TRUE”
+IACCEPTSQLSERVERLICENSETERMS="TRUE"
 ; Specify whether SQL Server Setup should discover and include product updates. The valid values are True and False or 1 and 0. By default SQL Server Setup will include updates that are found.
-UpdateEnabled=”True”
-; Specify the location where SQL Server Setup will obtain product updates. The valid values are “MU” to search Microsoft Update, a valid folder path, a relative path such as .MyUpdates or a UNC share. By default SQL Server Setup will search Microsoft Update or a Windows Update service through the Window Server Update Services.
-UpdateSource=”MU”
+UpdateEnabled="True"
+; Specify the location where SQL Server Setup will obtain product updates. The valid values are “MU" to search Microsoft Update, a valid folder path, a relative path such as .MyUpdates or a UNC share. By default SQL Server Setup will search Microsoft Update or a Windows Update service through the Window Server Update Services.
+UpdateSource="MU"
 ; CM brick TCP communication port
-COMMFABRICPORT=”0″
+COMMFABRICPORT="0"
 ; How matrix will use private networks
-COMMFABRICNETWORKLEVEL=”0″
+COMMFABRICNETWORKLEVEL="0"
 ; How inter brick communication will be protected
-COMMFABRICENCRYPTION=”0″
+COMMFABRICENCRYPTION="0"
+; Specifies the list of administrator accounts that need to be provisioned. 
+ASSYSADMINACCOUNTS="$user"
+; Windows account(s) to provision as SQL Server system administrators. 
+SQLSYSADMINACCOUNTS="$user"
+; The Windows account(s) used to grant permission to the Distributed Replay Controller service. 
+CTLRUSERS="$user"
 ; TCP port used by the CM brick
-MATRIXCMBRICKCOMMPORT=”0″
+MATRIXCMBRICKCOMMPORT="0"
 SECURITYMODE="SQL"
 SAPWD="$Pass"
 "@
 
     set-content -Value $Source -Path 'configurationfile.ini'
-    # choco.exe install mssqlserver2012express --params='/ConfigurationFile="ConfigurationFile.ini"' -y
-    choco install sql-server-2016-developer-edition --execution-timeout 5400 --params='/ConfigurationFile="ConfigurationFile.ini"' -y
+    choco install sql-server-2016-developer-edition --execution-timeout 5400 --ia "/ConfigurationFile='c:\ConfigurationFile.ini'" -y
 
     Remove-Item configurationfile.ini -Force    
 }
@@ -3156,7 +3155,6 @@ CreateAppPools
 
 CreateFirewallRules
 
-# choco install sql-server-2016-developer-edition --execution-timeout 5400 -ia "/IACCEPTSQLSERVERLICENSETERMS /QS /HIDECONSOLE /ACTION=install /FEATURES=SQLEngine,Tools /INSTANCE ID=MSSQLSERVER /INSTANCENAME=MSSQLSERVER /UPDATEENABLED=FALSE /AGTSVCACCOUNT='UCN\_rdbuild' /AGTSVCPASSWORD=RDBu1ld01 /AGTSVCSTARTUPTYPE=Automatic /SQLSVCACCOUNT='UCN\_rdbuild' /SQLSVCPASSWORD=RDBu1ld01 /SQLSVCSTARTUPTYPE=Automatic" -o -y
 InstallSqlServer
 
 choco feature enable -n allowGlobalConfirmation
