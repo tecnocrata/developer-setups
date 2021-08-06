@@ -41,9 +41,9 @@ then
     # ======================================
     # INSTALLING AND CONFIGURING NODE JS 10.x
     # ======================================
-    echo "1\. Installing nodejs 10.x"
+    echo "1\. Installing nodejs 12.x"
     echo "..............."
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     sudo apt-get install -y nodejs
     
     sudo apt-get update
@@ -176,7 +176,7 @@ then
     echo 
     echo "1\. Install Docker Compose..."
     echo
-    sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
     echo
     echo "2\. Apply executable permissions to the binary..."
@@ -203,19 +203,19 @@ then
     echo
     sudo apt-get install build-essential g++
 
-    echo
-    echo "2\. Installing grunt and grunt-cli... "
-    echo
-    sudo npm install -g grunt
-    sudo npm install -g grunt-cli
+    # echo
+    # echo "2\. Installing grunt and grunt-cli... "
+    # echo
+    # sudo npm install -g grunt
+    # sudo npm install -g grunt-cli
 
     echo "3\. Changing folder permission and ownership to current user in /home/$SUDO_USER/.npm/"
     sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.npm/
 
-    echo
-    echo "4\. Installing Yeoman... "
-    echo
-    sudo npm install -g yo
+    # echo
+    # echo "4\. Installing Yeoman... "
+    # echo
+    # sudo npm install -g yo
 
     echo
     echo "5\. Editing docker file... "
@@ -245,15 +245,6 @@ then
     sudo apt-get update
     sudo apt-get upgrade
     
-    #curl -O https://bootstrap.pypa.io/get-pip.py
-    #python get-pip.py --user
-    #export PATH=~/.local/bin:$PATH
-    #source ~/.profile
-    
-    #sudo apt-get install python-pip
-    #pip -V
-    #echo "Upgrading pip to latest stable version 9.x"
-    #sudo pip install -U pip
     sudo -H apt-get install python-pip && sudo -H pip install -U pip
     
     echo
@@ -267,9 +258,7 @@ then
     echo "11\. Installing dotnet core for Ubuntu 17.10 based on https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x"
     echo
     echo "Register the Microsoft Product key as trusted. "
-    #curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-    #sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-    wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     
     #echo "Set up the desired version host package feed. In this case Ubuntu 17.10 "
@@ -277,11 +266,11 @@ then
     #sudo apt-get update
     
     echo "Install .NET Core."
-    #sudo apt-get install dotnet-sdk-2.1.4
-    sudo add-apt-repository universe
-    sudo apt-get install apt-transport-https
     sudo apt-get update
-    sudo apt-get install dotnet-sdk-2.2=2.2.108-1
+    sudo add-apt-repository universe
+    sudo apt-get install -y apt-transport-https
+    sudo apt-get update
+    sudo apt-get install -y dotnet-sdk-3.1
     
     echo "Install 7z and rar"
     sudo apt-get install p7zip-full p7zip-rar
@@ -289,8 +278,9 @@ then
     echo
     echo "12\. Installing powerline and prompt customizations "
     echo
-    sudo -H apt-get install python3-pip && sudo -H pip3 install -U pip3
-    sudo -H pip3 install git+git://github.com/Lokaltog/powerline
+    # sudo -H apt-get install python3-pip && sudo -H pip3 install -U pip3
+    # sudo -H pip3 install git+git://github.com/Lokaltog/powerline
+    sudo apt install --yes powerline
     wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
     wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
     sudo mv PowerlineSymbols.otf /usr/share/fonts/
@@ -392,10 +382,11 @@ then
     echo "Configuration completed...."
     clear
     
-    echo
-    echo "15\. Installing OpenJDK 8 JRE/JDK"
-    echo
-    sudo apt install openjdk-8-jre
+    # echo
+    # echo "15\. Installing OpenJDK 8 JRE/JDK"
+    # echo
+    # sudo apt install openjdk-8-jre
+    sudo apt install --yes vim
     
     echo
     echo "16\. Installing Gnome Tweak"
