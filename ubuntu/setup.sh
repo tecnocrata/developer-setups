@@ -39,11 +39,11 @@ then
     sudo apt-get update
     sudo apt-get install curl
     # ======================================
-    # INSTALLING AND CONFIGURING NODE JS 10.x
+    # INSTALLING AND CONFIGURING NODE JS 14.x
     # ======================================
-    echo "1\. Installing nodejs 12.x"
+    echo "1\. Installing nodejs 14.x"
     echo "..............."
-    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y nodejs
     
     sudo apt-get update
@@ -158,6 +158,7 @@ then
 
     echo "6\. Add your user $SUDO_USER to the docker group. "
     sudo usermod -aG docker $SUDO_USER
+    sudo usermod -aG docker ${USER}
 
     echo 
     echo "7\. Service docker restart..."
