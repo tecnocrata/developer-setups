@@ -192,7 +192,7 @@ brew install --cask sourcetree
 brew install --cask postman
 
 # =================
-# INSTALLING Minikube
+# INSTALLING Kubectl & Minikube
 # AFTER installing this script let's go and start kubernetes/k8s
 # https://gist.github.com/tecnocrata/24183dd0d97078bf1f109dc6e7d3e295
 # =================
@@ -202,6 +202,10 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-
 && sudo install -o root -g wheel -m 4755 docker-machine-driver-hyperkit /usr/local/bin/
 brew install minikube
 
+# =================
+# INSTALLING Kubecolor
+# =================
+brew install dty1er/tap/kubecolor
 
 # =================
 # INSTALLING Alfred related tools

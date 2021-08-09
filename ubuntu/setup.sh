@@ -202,6 +202,12 @@ then
     sudo apt-get update
     sudo apt-get install -y kubectl
 
+    # =========================
+    # INSTALLING MINIKUBE
+    # =========================
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    sudo dpkg -i minikube_latest_amd64.deb
+
     # =============
     # CONFIGURATION
     # =============
@@ -368,15 +374,18 @@ then
     echo
     echo "13\. Installing go "
     echo "https://tecadmin.net/install-go-on-ubuntu/#"
-    sudo apt-get update
-    sudo apt-get -y upgrade
-    #sudo wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz
-    sudo wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-    #sudo tar -zxvf  go1.7.1.linux-amd64.tar.gz -C /usr/local/
-    sudo tar -xvf go1.9.2.linux-amd64.tar.gz -C /usr/local/
-    export PATH=$PATH:/usr/local/go/bin
-    mkdir $HOME/work
-    export GOPATH=$HOME/work
+    # sudo apt-get update
+    # sudo apt-get -y upgrade
+    # #sudo wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz
+    # sudo wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+    # #sudo tar -zxvf  go1.7.1.linux-amd64.tar.gz -C /usr/local/
+    # sudo tar -xvf go1.9.2.linux-amd64.tar.gz -C /usr/local/
+    # export PATH=$PATH:/usr/local/go/bin
+    # mkdir $HOME/work
+    # export GOPATH=$HOME/work
+    sudo add-apt-repository ppa:longsleep/golang-backports
+    sudo apt update
+    sudo apt install golang-go
 
     sudo npm install -g serverless
     sudo go get -u github.com/remind101/assume-role 
