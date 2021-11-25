@@ -149,6 +149,7 @@ brew install the_silver_searcher
 # =================
 brew install cask
 brew install htop
+brew install bat
 brew install speedtest-cli
 #More info about imagemagick: https://www.youtube.com/watch?v=Ym2pxzWpTNw&t=5s
 brew install imagemagick
