@@ -160,6 +160,13 @@ brew install peco
 brew install tig
 
 # =================
+# INSTALLING zoxide replacement of cd
+# Complete instalation: https://github.com/ajeetdsouza/zoxide
+# =================
+brew install zoxide
+brew install fzf
+
+# =================
 # INSTALLING Markdown convertion tool
 # =================
 brew install pandoc
