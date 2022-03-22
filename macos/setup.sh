@@ -158,6 +158,7 @@ brew install mc
 brew install cmus
 brew install peco
 brew install tig
+brew install thefuck
 
 # =================
 # INSTALLING zoxide replacement of cd
