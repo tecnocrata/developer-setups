@@ -159,6 +159,7 @@ brew install cmus
 brew install peco
 brew install tig
 brew install thefuck
+brew install jq
 
 # =================
 # INSTALLING zoxide replacement of cd
@@ -188,6 +189,7 @@ brew install --cask the-unarchiver
 brew install --cask clockify
 brew install --cask notion
 brew install --cask appcleaner
+brew install --cask karabiner-elements
 
 # =================
 # INSTALLING Development tools
