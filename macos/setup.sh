@@ -222,7 +222,7 @@ brew install dty1er/tap/kubecolor
 # =================
 # INSTALLING Alfred related tools
 # =================
-npm install --global alfred-fkill
+# npm install --global alfred-fkill
 
 # =================
 # Enabling END and HOME key correctly
