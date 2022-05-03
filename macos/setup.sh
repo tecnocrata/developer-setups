@@ -72,9 +72,9 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 # =================
 cd ~/installation
 brew install zsh-completions
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # Configure ZSH
-# https://medium.com/@mrkdsgn/install-zsh-and-oh-my-zsh-on-osx-10-11-el-capitan-cfaa0ebb97dc
+# https://medium.com/seokjunhong/customize-the-terminal-zsh-iterm2-powerlevel10k-complete-guide-for-beginners-35c4ba439055
 
 chsh -s =zsh
 
@@ -93,14 +93,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 cd ~/installation
 curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 # zsh ~/.zim/zimfw.zsh install
-
-
-# ==========================
-# INSTALLING powerlevel9k for Zim
-# After Install configure using instructions at: https://github.com/bhilburn/powerlevel9k/wiki/Install-Instructions#option-9-install-for-zim
-# ==========================
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/.zim/modules/prompt/external-themes/powerlevel9k
-# ln -s ~/.zim/modules/prompt/external-themes/powerlevel9k/powerlevel9k.zsh-theme ~/.zim/modules/prompt/functions/prompt_powerlevel9k_setup
 
 cd ~/Library/Fonts 
 curl -O 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf'
