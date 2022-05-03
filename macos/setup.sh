@@ -195,6 +195,8 @@ brew install --cask dotnet-sdk
 brew install --cask sourcetree
 brew install --cask postman
 brew install --cask raycast
+brew install --cask obsidian
+brew install --cask logseq
 
 # =================
 # INSTALLING Kubectl & Minikube
