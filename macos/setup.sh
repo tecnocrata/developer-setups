@@ -202,6 +202,7 @@ brew install --cask visual-studio
 brew install --cask dotnet-sdk
 brew install --cask sourcetree
 brew install --cask postman
+brew install --cask raycast
 
 # =================
 # INSTALLING Kubectl & Minikube
@@ -210,8 +211,7 @@ brew install --cask postman
 # =================
 cd ~/installation
 brew install kubectl
-curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-hyperkit \
-&& sudo install -o root -g wheel -m 4755 docker-machine-driver-hyperkit /usr/local/bin/
+curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-hyperkit && sudo install -o root -g wheel -m 4755 docker-machine-driver-hyperkit /usr/local/bin/
 brew install minikube
 
 # =================
