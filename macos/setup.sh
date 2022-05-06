@@ -183,6 +183,7 @@ brew install --cask clockify
 brew install --cask notion
 brew install --cask appcleaner
 brew install --cask karabiner-elements
+brew install --cask alt-tab
 
 # =================
 # INSTALLING Development tools
