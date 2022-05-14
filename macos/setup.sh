@@ -153,6 +153,7 @@ brew install tig
 brew install thefuck
 brew install jq
 brew install yqrashawn/goku/goku
+brew install exa
 
 # =================
 # INSTALLING zoxide replacement of cd
