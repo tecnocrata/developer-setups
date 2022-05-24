@@ -207,6 +207,7 @@ $ModulesToBeInstalled = @(
 $ChocoInstalls = @(
     '7zip',
     '7zip.commandline',
+    'awscli',
     'cmder',
     'curl',
     'Cygwin',
@@ -3124,6 +3125,8 @@ else {
         Write-Output "No modules were found that needed to be installed."
     }
 }
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
 
 ##################################
 ##################################
