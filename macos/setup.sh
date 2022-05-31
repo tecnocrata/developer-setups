@@ -155,6 +155,7 @@ brew install jq
 brew install yqrashawn/goku/goku
 brew install exa
 brew install tldr
+brew install hyperkit
 
 # =================
 # INSTALLING zoxide replacement of cd
