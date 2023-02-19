@@ -1,23 +1,22 @@
 # Developer Setups
 
+This repository contains scripts to install all the necessary software for a developer's computer, with options for the main operating systems.
+
 ## Introduction
 
-I have to admit that I never thought a day when I would create a setup for all the operating systems would come, but it is here, and the results are for sharing with you.
+Setting up a new computer can be a time-consuming and tedious process, especially for developers who need a specific set of software and tools to work efficiently. That's why we created Developer Setups, a collection of scripts that automate the installation process, making it faster and easier to get up and running.
 
-## Bash shell scripts
+## Features
 
-For some time I’ve been developing some scripts for personal use, these scripts are useful for setting up a new development environment from scratch
+- A wide range of software: The scripts include popular text editors, browsers, databases, version control systems, and other development tools that are essential for building software.
+- Cross-platform compatibility: Developer Setups supports the three major operating systems: Windows, macOS, and Linux.
+- Customizable: The scripts can be customized to install only the software that you need for your specific development environment.
+- Easy to use: The installation process is simple and straightforward, with step-by-step instructions that guide you through the entire process.
 
-There are three flavors of them, one for macOS, another one for Ubuntu and my last addition for Windows.
+## How to Use
 
-## Powershell scripts
+To get started, simply download the appropriate script for your operating system and run it. The script will automatically install all the necessary software for your development environment. You can customize the installation by modifying the script to include or exclude specific software packages.
 
-These are the new kids on the block, and this work is based on this Slover's [gist recipe](https://gist.github.com/zloeber/9c2d659a2a8f063af26c9ba0285c7e78) which is constantly updated btw and in a less frequently updated yetanotherchris's [gist](https://gist.github.com/yetanotherchris/c51757d221eecb150867b7b113d227e8).
+## Conclusion
 
-## Update frequency
-
-I update them solely when I set up a new environment or when I want to register one modification for future installations.
-
-Please feel free to report issues.
-
-Thank you!
+With Developer Setups, setting up a new development environment has never been easier. Whether you're a seasoned developer or just getting started, our scripts can save you time and effort by automating the installation process.
